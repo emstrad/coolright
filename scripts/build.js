@@ -8,12 +8,20 @@ import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { join, extname } from 'node:path';
 import { formHtml } from './book-form.js';
+import { servicesHtml, faqHtml, schemaHtml } from './render-home.js';
 
 const ROOT = process.cwd();
 const PUBLIC = join(ROOT, 'public');
 
-const START = '<!-- BOOK:START.';
-const END = '<!-- BOOK:END -->';
+// Every generated block on a page sits between a pair of these. The opening
+// marker carries its own explanation, so somebody editing the page sees why
+// their change would be overwritten before they make it.
+const BLOCKS = [
+  ['BOOK', () => formHtml()],
+  ['SERVICES', () => servicesHtml()],
+  ['FAQ', () => faqHtml()],
+  ['SCHEMA', () => schemaHtml()],
+];
 
 // Every asset reference carries a content hash, which is the only thing that
 // makes a year of immutable caching safe. Without it a returning visitor runs
@@ -47,12 +55,16 @@ export function stamp(html, map) {
     });
 }
 
-export function injectForm(html, form) {
-  const start = html.indexOf(START);
-  const end = html.indexOf(END);
+export function injectBlock(html, name, content) {
+  const start = html.indexOf(`<!-- ${name}:START`);
+  const end = html.indexOf(`<!-- ${name}:END -->`);
   if (start === -1 || end === -1) return html;
   const head = html.slice(0, html.indexOf('-->', start) + 3);
-  return `${head}\n${form}\n      ${html.slice(end)}`;
+  return `${head}\n${content}\n      ${html.slice(end)}`;
+}
+
+export function injectAll(html) {
+  return BLOCKS.reduce((out, [name, render]) => injectBlock(out, name, render()), html);
 }
 
 async function pages() {
@@ -73,14 +85,13 @@ async function pages() {
 // with last month's form or a stamp that no longer matches the asset.
 export async function build({ write = true } = {}) {
   const map = await hashes();
-  const form = formHtml();
   const written = [];
 
   for (const page of await pages()) {
     const before = await readFile(page, 'utf8');
-    // The form goes in first and the stamps go on last, so whatever the other
-    // passes wrote is what gets stamped.
-    const after = stamp(injectForm(before, form), map);
+    // The generated blocks go in first and the stamps go on last, so whatever
+    // the other passes wrote is what gets stamped.
+    const after = stamp(injectAll(before), map);
     if (after !== before) {
       if (write) await writeFile(page, after);
       written.push(page.replace(`${PUBLIC}/`, ''));

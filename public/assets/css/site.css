@@ -97,12 +97,23 @@ a { color: var(--accent) }
   display: flex;
   align-items: center;
   gap: 14px;
+  /* Without this the button is the first thing to be pushed off the right
+     edge on a narrow window, which is the one control the header exists for. */
+  flex: none;
 }
 
 .call-link {
   color: var(--text);
   text-decoration: none;
   font-weight: 600;
+  white-space: nowrap;
+}
+
+/* The email address is long. On a small screen the button matters more, so the
+   address drops out of the header and stays in the footer. */
+@media (max-width: 720px) {
+  .call-link { display: none }
+  .tagline { display: none }
 }
 
 .btn {
@@ -139,16 +150,32 @@ a { color: var(--accent) }
 }
 
 .hero {
-  padding: 72px 0 56px;
+  padding: 64px 0 64px;
   background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
 }
 
+/* Copy left, quote form right. The form is the point of the page, so it sits
+   in the first screen rather than below it. Below 960px there is no second
+   column worth having, so it stacks and the copy comes first. */
+.hero-grid {
+  display: grid;
+  gap: 44px;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  align-items: start;
+}
+
+.hero-copy { min-width: 0 }
+
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 32px }
+  .hero { padding: 40px 0 48px }
+}
+
 h1 {
-  font-size: clamp(30px, 5vw, 52px);
-  line-height: 1.1;
+  font-size: clamp(30px, 4.2vw, 50px);
+  line-height: 1.08;
   letter-spacing: -.02em;
   margin: 14px 0 18px;
-  max-width: 20ch;
 }
 
 .hl { color: var(--accent) }

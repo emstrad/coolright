@@ -6,7 +6,11 @@
   border: 1px solid var(--line);
   border-radius: 18px;
   overflow: hidden;
+  /* Full width of its hero column on desktop, capped once it stacks so it does
+     not stretch to a silly line length on a tablet. */
+  width: 100%;
   max-width: 640px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
 }
 
 .book-body { padding: 26px }

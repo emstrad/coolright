@@ -14,46 +14,71 @@
 <meta property="og:url" content="https://coolright.co.uk/" />
 <!-- Fonts are self hosted rather than fetched from Google, so first paint does
      not wait on a DNS lookup and TLS handshake to somebody else's server. The
-     woff2 lands with the full home page build; until then this is a system stack. -->
-<link rel="stylesheet" href="/assets/css/site.css?v=b2b1d8fad1" />
-<link rel="stylesheet" href="/assets/css/form.css?v=52118cec07" />
+     woff2 lands with the brand pass; until then this is a system stack. -->
+<link rel="stylesheet" href="/assets/css/site.css?v=a9dca6a524" />
+<link rel="stylesheet" href="/assets/css/sections.css?v=f36fad2c93" />
+<link rel="stylesheet" href="/assets/css/form.css?v=f719797ce7" />
+<!-- SCHEMA:START. Written by scripts/build.js from content/. Editing it here
+     would let the structured data claim something the page does not say. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HVACBusiness","name":"CoolRight","slogan":"Climate control. Done right.","description":"Air conditioning, heating and ventilation installation, servicing and maintenance across London and the whole of the South East.","email":"team@coolright.co.uk","url":"https://coolright.co.uk","address":{"@type":"PostalAddress","addressRegion":"Greater London","addressCountry":"GB"},"areaServed":["Greater London","Kent","Surrey","Essex","Hertfordshire","Sussex","Berkshire","Buckinghamshire","Oxfordshire","Hampshire","Isle of Wight"],"serviceType":["Wall-Mounted Splits","Multi-Split Systems","Ducted and Cassettes","Heating and Heat Pumps","Ventilation and MVHR","Servicing Plans","Repairs and Regas","Commercial and Comms Rooms","Bespoke Solutions"]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does air conditioning cost to install?","acceptedAnswer":{"@type":"Answer","text":"A single wall-mounted split in a straightforward room is the entry point, with multi-split and ducted systems rising from there depending on the number of rooms, the equipment chosen and how much making good is involved. We do not price a job we have not seen, because a price given blind over the phone is a guess that gets corrected upwards later. The visit is free and the written quote is fixed."}},{"@type":"Question","name":"Do I need planning permission?","acceptedAnswer":{"@type":"Answer","text":"For most domestic installs, no. Outdoor units on houses usually fall under permitted development provided siting, size and noise conditions are met, but flats, listed buildings, conservation areas and front elevations are different. We check this when we visit and tell you before you commit."}},{"@type":"Question","name":"How much does it cost to run?","acceptedAnswer":{"@type":"Answer","text":"Far less than most people expect. A modern inverter split serving a bedroom typically runs at a few hundred watts once it has reached temperature, rather than the full rated input. We give you indicative running costs for the equipment we propose, based on your usage rather than a best case."}},{"@type":"Question","name":"Is it noisy?","acceptedAnswer":{"@type":"Answer","text":"The indoor unit at low fan speed is quieter than a fridge. The outdoor unit is the one that matters, for you and for your neighbours, so we select on sound power as well as capacity and site it thoughtfully. We will tell you if the only available position is a problem."}},{"@type":"Question","name":"Can air conditioning heat my home too?","acceptedAnswer":{"@type":"Answer","text":"Yes. Any inverter system we install is a reversible air-to-air heat pump, and in an insulated room it is one of the cheapest ways to heat a space. We size for both loads so it performs properly in January as well as in July."}},{"@type":"Question","name":"How often does it need servicing?","acceptedAnswer":{"@type":"Answer","text":"Annually for domestic, six-monthly for heavily used commercial systems. It protects the manufacturer warranty, keeps efficiency up, and prevents the two most common failures we attend: blocked condensate drains and fouled coils."}},{"@type":"Question","name":"What is F-Gas and why does it matter?","acceptedAnswer":{"@type":"Answer","text":"Refrigerant handling is legally restricted to certified engineers and certified companies. An installer without F-Gas certification cannot lawfully work on the refrigerant circuit, and a system installed outside that framework can invalidate both the warranty and your insurance. We are registered, and we will show you the certificate."}},{"@type":"Question","name":"How long does an install take?","acceptedAnswer":{"@type":"Answer","text":"Most single-room domestic installs are one day. Multi-splits are one to three days, and ducted and commercial work runs longer and is quoted by programme. You will have the dates in writing before we start."}},{"@type":"Question","name":"Do you work on systems you did not install?","acceptedAnswer":{"@type":"Answer","text":"Yes, for servicing and repair, with the caveat that we will tell you plainly if we find something in the original installation that we cannot warrant. If it needs putting right, we will price that separately and openly."}}]}
+</script>
+      <!-- SCHEMA:END -->
 <script>document.documentElement.classList.remove('no-js')</script>
 </head>
 <body>
 
 <a class="skip" href="#main">Skip to content</a>
 
-<header class="site-header">
+<header class="site-header" id="site-header">
   <div class="container nav">
     <a href="/" class="brand" aria-label="CoolRight home">
       <span class="wordmark">Cool<span class="r">Right</span></span>
       <span class="tagline">Climate control. Done <span class="r">right.</span></span>
     </a>
-    <div class="nav-cta">
-      <!-- The call link and the fixed bottom action bar both return the moment
-           the phone number is confirmed in content/business.js. A placeholder
-           number on a live page rings somebody else, so there is not one. -->
-      <a href="mailto:team@coolright.co.uk" class="call-link">team@coolright.co.uk</a>
-      <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
+    <div class="nav-end">
+      <nav aria-label="Primary" id="nav-panel">
+        <ul class="nav-links">
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#commercial">Commercial</a></li>
+          <li><a href="#areas">Areas</a></li>
+          <li><a href="#faq">FAQs</a></li>
+        </ul>
+      </nav>
+      <div class="nav-cta">
+        <!-- The call link and the call button in the mobile bar both return the
+             moment the phone number is confirmed in content/business.js. A
+             placeholder number on a live page rings somebody else. -->
+        <a href="mailto:team@coolright.co.uk" class="call-link">team@coolright.co.uk</a>
+        <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
+      </div>
+      <button class="nav-toggle" type="button" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel">
+        <span class="bars" aria-hidden="true"></span>
+        <span class="sr-only">Menu</span>
+      </button>
     </div>
   </div>
 </header>
 
 <main id="main">
+  <!-- The form is the second column of the hero, not a section further down.
+       On a quoted trade the whole page exists to produce an enquiry, and a form
+       the visitor has to go looking for is one a good share of them never
+       reach. It stacks under the copy on a phone, where there is no second
+       column to put it in. -->
   <section class="hero">
-    <div class="container">
-      <span class="eyebrow">Air conditioning &middot; Heating &middot; Ventilation</span>
-      <h1>Air conditioning installed properly. <span class="hl">Fixed price</span>, in writing, before we start.</h1>
-      <p class="lede">Tell us what you need and we will price it. One visit to see the space, a fixed written quote, then F-Gas registered engineers who install to manufacturer spec and maintain what they fit.</p>
-      <p class="speed"><strong>Free quote visit, fixed written price within 24 hours.</strong> F-Gas registered engineers. No pressure, no hard sell, no obligation.</p>
-      <div class="hero-cta">
-        <a href="#book" class="btn btn--primary btn--lg">Get a Fixed Quote</a>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Air conditioning &middot; Heating &middot; Ventilation</span>
+        <h1>Air conditioning installed properly. <span class="hl">Fixed price</span>, in writing, before we start.</h1>
+        <p class="lede">Tell us what you need and we will price it. One visit to see the space, a fixed written quote, then F-Gas registered engineers who install to manufacturer spec and maintain what they fit.</p>
+        <p class="speed"><strong>Free quote visit, fixed written price within 24 hours.</strong> F-Gas registered engineers. No pressure, no hard sell, no obligation.</p>
       </div>
-    </div>
-  </section>
 
-  <section class="panel">
-    <div class="container">
       <!-- BOOK:START. Written by scripts/build.js from scripts/book-form.js.
            Do not edit between these markers: the next build overwrites it, and
            a hand-edited copy here is exactly the drift the generator exists to
@@ -185,24 +210,381 @@
       <!-- BOOK:END -->
     </div>
   </section>
+
+  <section class="trustbar" aria-label="Credentials">
+    <div class="container trustbar-grid">
+      <div class="badge">
+        <strong>F-Gas registered</strong>
+        <span>Legally required, often skipped</span>
+      </div>
+      <div class="badge">
+        <strong>Fixed written quotes</strong>
+        <span>Priced before we start</span>
+      </div>
+      <div class="badge">
+        <strong>Manufacturer warranties</strong>
+        <span>Up to 7 years, registered for you</span>
+      </div>
+      <div class="badge">
+        <strong>London and the South East</strong>
+        <span>Engineers based across the region</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="why" aria-labelledby="why-heading">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Why CoolRight</span>
+        <h2 id="why-heading">An air conditioning system is only as good as the day it was installed.</h2>
+        <p class="lede">Undersized units that run flat out, condensate routed uphill, pipe runs never pressure tested, warranties never registered. Almost every callout we attend on someone else's system traces back to the install, not the equipment. We do the boring parts properly.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <h3>Sized by calculation</h3>
+          <p>Heat load worked out from glazing, orientation, occupancy and construction. Not a guess from the room's floor area.</p>
+        </article>
+        <article class="card">
+          <h3>Installed to spec</h3>
+          <p>Brazed joints, nitrogen purge, vacuum and pressure test, condensate falls checked, commissioning readings recorded and handed to you.</p>
+        </article>
+        <article class="card">
+          <h3>Quiet and efficient</h3>
+          <p>Inverter equipment selected for sound level as much as output, sited so the outdoor unit is not the thing your neighbour remembers you by.</p>
+        </article>
+        <article class="card">
+          <h3>We maintain what we fit</h3>
+          <p>Annual servicing, filter and coil cleans, refrigerant checks and priority callouts. The same engineers who installed it.</p>
+        </article>
+      </div>
+      <div class="section-cta">
+        <a href="#book" class="btn btn--primary btn--lg">Get a Fixed Quote</a>
+        <span class="note">Short form. Same day reply. Free fixed quote.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="how" aria-labelledby="how-heading">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The process</span>
+        <h2 id="how-heading">Four stages, and you know the price before anyone drills a wall.</h2>
+      </div>
+      <div class="steps">
+        <article class="step">
+          <span class="num">Stage 01</span>
+          <h3>Enquiry and reply</h3>
+          <p>Send the form with your postcode and what you need. We reply the same day, and book a free visit if we need to see the space to price it accurately.</p>
+        </article>
+        <article class="step">
+          <span class="num">Stage 02</span>
+          <h3>We come and look</h3>
+          <p>Free, and usually 30 to 60 minutes. Heat load, indoor and outdoor unit positions, pipe routes, condensate, power supply and access all agreed with you on site.</p>
+        </article>
+        <article class="step">
+          <span class="num">Stage 03</span>
+          <h3>Fixed written quote</h3>
+          <p>Within 24 hours. Equipment named and specified, the work itemised, the price fixed. Two or three options where there is a genuine choice to make.</p>
+        </article>
+        <article class="step">
+          <span class="num">Stage 04</span>
+          <h3>Install and aftercare</h3>
+          <p>Most domestic installs are a day. Commissioning readings, warranty registration, a walkthrough of the controls, then an annual service reminder.</p>
+        </article>
+      </div>
+      <div class="section-cta">
+        <a href="#book" class="btn btn--primary btn--lg">Start Stage One</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" aria-labelledby="services-heading">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">What we do</span>
+        <h2 id="services-heading">Installation, servicing, maintenance. Bespoke where it needs to be.</h2>
+        <p class="lede">Residential, commercial and bespoke work across London and the whole of the South East. Choose what you are looking at and we will tell you how we approach it.</p>
+      </div>
+      <!-- SERVICES:START. Written by scripts/build.js from content/services.js.
+           Every panel is in the markup and JavaScript hides all but one, rather
+           than building them at runtime, because most AI crawlers do not run
+           JavaScript and this is most of the words on the page. -->
+<div class="services-pills" role="tablist" aria-label="Services">
+        <button class="pill" type="button" role="tab" id="tab-split" aria-controls="panel-split" aria-selected="true" data-svc="split">Wall-Mounted Splits</button>
+        <button class="pill" type="button" role="tab" id="tab-multi" aria-controls="panel-multi" aria-selected="false" data-svc="multi">Multi-Split Systems</button>
+        <button class="pill" type="button" role="tab" id="tab-ducted" aria-controls="panel-ducted" aria-selected="false" data-svc="ducted">Ducted and Cassettes</button>
+        <button class="pill" type="button" role="tab" id="tab-heating" aria-controls="panel-heating" aria-selected="false" data-svc="heating">Heating and Heat Pumps</button>
+        <button class="pill" type="button" role="tab" id="tab-ventilation" aria-controls="panel-ventilation" aria-selected="false" data-svc="ventilation">Ventilation and MVHR</button>
+        <button class="pill" type="button" role="tab" id="tab-servicing" aria-controls="panel-servicing" aria-selected="false" data-svc="servicing">Servicing Plans</button>
+        <button class="pill" type="button" role="tab" id="tab-repairs" aria-controls="panel-repairs" aria-selected="false" data-svc="repairs">Repairs and Regas</button>
+        <button class="pill" type="button" role="tab" id="tab-commercial" aria-controls="panel-commercial" aria-selected="false" data-svc="commercial">Commercial and Comms Rooms</button>
+        <button class="pill" type="button" role="tab" id="tab-bespoke" aria-controls="panel-bespoke" aria-selected="false" data-svc="bespoke">Bespoke Solutions</button>
+      </div>
+      <div class="service-panel">
+        <div class="service-content" id="panel-split" role="tabpanel" aria-labelledby="tab-split">
+          <h3>Wall-Mounted Splits</h3>
+          <p>The single most common domestic install: one indoor unit, one outdoor condenser, a small core drilled through the wall. Fitted well it is quiet, unobtrusive and cheap to run. Fitted badly it drips, rattles, and cools one corner of the room.</p>
+          <p>We agree unit position with you before anything is cut, keep pipe runs as short and as hidden as the building allows, and box or trunk what cannot be concealed neatly rather than leaving it clipped to a wall.</p>
+          <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
+        </div>
+        <div class="service-content" id="panel-multi" role="tabpanel" aria-labelledby="tab-multi" hidden>
+          <h3>Multi-Split Systems</h3>
+          <p>One outdoor unit serving two to five indoor units, which is usually the right answer for a whole house or a flat where roof and balcony space is limited and a condenser per room is out of the question.</p>
+          <p>Sizing matters more here, because a multi-split shared across rooms that are never all in use at once behaves very differently from one that is. We calculate simultaneous load rather than adding room totals together.</p>
+          <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
+        </div>
+        <div class="service-content" id="panel-ducted" role="tabpanel" aria-labelledby="tab-ducted" hidden>
+          <h3>Ducted and Cassettes</h3>
+          <p>Where the equipment should be invisible: ceiling cassettes in offices and retail, or fully ducted systems with slim linear grilles in higher-end residential and new-build.</p>
+          <p>These need to be designed alongside the ceiling and the building services rather than retrofitted around them. We will tell you early if the void you have will not take the unit, rather than after the plasterboard is up.</p>
+          <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
+        </div>
+        <div class="service-content" id="panel-heating" role="tabpanel" aria-labelledby="tab-heating" hidden>
+          <h3>Heating and Heat Pumps</h3>
+          <p>Modern inverter air conditioning is an air-to-air heat pump, and in a well-insulated room it heats far more cheaply than an electric radiator and often more cheaply than gas. Many clients come for cooling and end up using it mostly in winter.</p>
+          <p>We specify equipment rated for low ambient heating, size for the heating load as well as the cooling load, and set the controls up so the system is genuinely usable year round.</p>
+          <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
+        </div>
+        <div class="service-content" id="panel-ventilation" role="tabpanel" aria-labelledby="tab-ventilation" hidden>
+          <h3>Ventilation and MVHR</h3>
+          <p>Cooling a sealed room does not make the air in it fresh. Extract ventilation, positive input ventilation and whole-house MVHR all address a different problem: stale air, condensation and humidity.</p>
+          <p>We install and commission extract and heat recovery systems, and where a property has both a damp problem and a comfort problem we will say which one to solve first.</p>
+          <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
+        </div>
+        <div class="service-content" id="panel-servicing" role="tabpanel" aria-labelledby="tab-servicing" hidden>
+          <h3>Servicing Plans</h3>
+          <p>An air conditioning system that is never serviced loses efficiency quietly, then fails on the hottest day of the year. Filters block, coils foul, condensate trays grow biofilm, and refrigerant charge drifts.</p>
+          <p>Annual or six-monthly visits, filter and coil cleaning, drain treatment, refrigerant and electrical checks, performance readings recorded so we can see decline before it becomes a breakdown. Plan clients get priority on the diary.</p>
+          <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
+        </div>
+        <div class="service-content" id="panel-repairs" role="tabpanel" aria-labelledby="tab-repairs" hidden>
+          <h3>Repairs and Regas</h3>
+          <p>Not cooling, leaking water, tripping out, a fault code on the display, or noisy in a way it never used to be. We diagnose before we quote, and we tell you honestly when a repair is not economic against a replacement.</p>
+          <p>Leak detection, brazed repairs, component replacement and recharge to the correct weighed-in charge. A system that needs regassing has a leak, so we find it rather than topping it up and taking your money twice.</p>
+          <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
+        </div>
+        <div class="service-content" id="panel-commercial" role="tabpanel" aria-labelledby="tab-commercial" hidden>
+          <h3>Commercial and Comms Rooms</h3>
+          <p>Offices, retail, hospitality, salons, gyms, and the server and comms rooms that cannot be allowed to get warm at all. Different priorities: resilience, noise limits, planning and landlord consents, and working around trading hours.</p>
+          <p>We handle the consents, work out of hours where needed, and set up F-Gas leak checking and record keeping for systems over the regulated thresholds so your compliance file is not a problem later.</p>
+          <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
+        </div>
+        <div class="service-content" id="panel-bespoke" role="tabpanel" aria-labelledby="tab-bespoke" hidden>
+          <h3>Bespoke Solutions</h3>
+          <p>Listed buildings, glazed extensions, loft conversions, home cinemas, wine rooms, plant rooms with no obvious condenser position. The jobs other installers decline, usually for good reasons that can still be designed around.</p>
+          <p>We visit, model the load, and propose something that works within the constraints of the building and the consents available, rather than telling you it cannot be done or fitting something that will not cope.</p>
+          <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
+        </div>
+        <aside class="service-aside" aria-label="What every install includes">
+          <h4>Every install includes</h4>
+          <ul>
+            <li>A heat load calculation, so the unit matches the room rather than the budget</li>
+            <li>Pressure and vacuum testing, with the commissioning readings written down</li>
+            <li>Manufacturer warranty registered in your name, up to seven years</li>
+            <li>Dust sheets, waste taken away, and the controls explained before we leave</li>
+          </ul>
+        </aside>
+      </div>
+      <!-- SERVICES:END -->
+    </div>
+  </section>
+
+  <section id="commercial" class="commercial" aria-labelledby="commercial-heading">
+    <div class="container ll-grid">
+      <div class="ll-text">
+        <span class="eyebrow">Commercial and landlords</span>
+        <h2 id="commercial-heading">When the cooling goes down, the business goes with it.</h2>
+        <p>Offices, salons, restaurants, retail units, gyms, comms rooms and managed blocks. We install and maintain systems where downtime costs money, and where a failed inspection is a compliance problem rather than an inconvenience.</p>
+        <p>Planned maintenance schedules, F-Gas leak checking and logging for systems above the thresholds, out of hours installation to avoid trading disruption, and a named engineer who knows your site.</p>
+        <a href="#book" class="btn btn--primary btn--lg">Talk to Us About a Site</a>
+      </div>
+      <ul class="ll-list">
+        <li>
+          <strong>Out of hours installation</strong>
+          <span>Evenings and weekends, so the floor keeps trading while we work.</span>
+        </li>
+        <li>
+          <strong>F-Gas logs maintained</strong>
+          <span>Leak checks at the required intervals, and records kept ready for inspection.</span>
+        </li>
+        <li>
+          <strong>Multi-site and portfolio</strong>
+          <span>One schedule, one contact, consistent equipment across every unit you hold.</span>
+        </li>
+        <li>
+          <strong>Priority breakdown response</strong>
+          <span>Maintenance clients get first call on the diary, including comms and server rooms.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="areas" class="areas" aria-labelledby="areas-heading">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Where we work</span>
+        <h2 id="areas-heading">Air conditioning across London and the whole of the South East.</h2>
+        <p class="lede">Engineers based across the region, so a quote visit is usually days away rather than weeks. If your postcode is not listed, send it anyway and we will confirm cover the same day.</p>
+      </div>
+      <div class="area-grid">
+        <article class="area-card">
+          <h3><span class="county">Greater London</span>All postcode districts</h3>
+          <ul><li>Central</li><li>North</li><li>East</li><li>South East</li><li>South West</li><li>West</li><li>Docklands</li><li>Outer boroughs</li></ul>
+        </article>
+        <article class="area-card">
+          <h3><span class="county">Kent</span>North and west Kent</h3>
+          <ul><li>Bromley</li><li>Dartford</li><li>Sevenoaks</li><li>Tunbridge Wells</li><li>Maidstone</li><li>Medway</li><li>Gravesend</li></ul>
+        </article>
+        <article class="area-card">
+          <h3><span class="county">Surrey</span>Across the county</h3>
+          <ul><li>Kingston</li><li>Croydon</li><li>Sutton</li><li>Epsom</li><li>Guildford</li><li>Woking</li><li>Reigate</li></ul>
+        </article>
+        <article class="area-card">
+          <h3><span class="county">Essex</span>South and central Essex</h3>
+          <ul><li>Romford</li><li>Brentwood</li><li>Basildon</li><li>Chelmsford</li><li>Southend</li><li>Ilford</li><li>Grays</li></ul>
+        </article>
+        <article class="area-card">
+          <h3><span class="county">Hertfordshire and Buckinghamshire</span>South of the counties</h3>
+          <ul><li>Watford</li><li>St Albans</li><li>Hemel Hempstead</li><li>Borehamwood</li><li>Hatfield</li><li>Amersham</li><li>High Wycombe</li></ul>
+        </article>
+        <article class="area-card">
+          <h3><span class="county">Sussex, Berkshire and beyond</span>The wider South East</h3>
+          <ul><li>Brighton</li><li>Crawley</li><li>Horsham</li><li>Reading</li><li>Slough</li><li>Windsor</li><li>Oxford</li><li>Southampton</li></ul>
+        </article>
+      </div>
+      <p class="area-note">Typical work includes <strong>single room wall-mounted splits</strong> in period houses and flats, <strong>multi-split systems</strong> covering several bedrooms from one outdoor unit, <strong>ceiling cassettes and ducted systems</strong> in offices and retail, <strong>air to air heat pumps</strong> used for heating as well as cooling, and <strong>comms room cooling</strong> with monitoring. Send your postcode in the form and we will confirm cover and get you a price.</p>
+      <div class="section-cta">
+        <a href="#book" class="btn btn--primary btn--lg">Check Your Postcode</a>
+        <span class="note">Quoting six days a week.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="faq" aria-labelledby="faq-heading">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Straight answers</span>
+        <h2 id="faq-heading">Fair questions before you spend money on cooling.</h2>
+      </div>
+      <!-- FAQ:START. Written by scripts/build.js from content/faqs.js, which
+           also feeds the FAQPage structured data, so the schema can never claim
+           an answer the page does not show. -->
+<div class="faq-list">
+        <details class="qa">
+          <summary>How much does air conditioning cost to install?<span class="qa-plus" aria-hidden="true"></span></summary>
+          <p>A single wall-mounted split in a straightforward room is the entry point, with multi-split and ducted systems rising from there depending on the number of rooms, the equipment chosen and how much making good is involved. We do not price a job we have not seen, because a price given blind over the phone is a guess that gets corrected upwards later. The visit is free and the written quote is fixed.</p>
+        </details>
+        <details class="qa">
+          <summary>Do I need planning permission?<span class="qa-plus" aria-hidden="true"></span></summary>
+          <p>For most domestic installs, no. Outdoor units on houses usually fall under permitted development provided siting, size and noise conditions are met, but flats, listed buildings, conservation areas and front elevations are different. We check this when we visit and tell you before you commit.</p>
+        </details>
+        <details class="qa">
+          <summary>How much does it cost to run?<span class="qa-plus" aria-hidden="true"></span></summary>
+          <p>Far less than most people expect. A modern inverter split serving a bedroom typically runs at a few hundred watts once it has reached temperature, rather than the full rated input. We give you indicative running costs for the equipment we propose, based on your usage rather than a best case.</p>
+        </details>
+        <details class="qa">
+          <summary>Is it noisy?<span class="qa-plus" aria-hidden="true"></span></summary>
+          <p>The indoor unit at low fan speed is quieter than a fridge. The outdoor unit is the one that matters, for you and for your neighbours, so we select on sound power as well as capacity and site it thoughtfully. We will tell you if the only available position is a problem.</p>
+        </details>
+        <details class="qa">
+          <summary>Can air conditioning heat my home too?<span class="qa-plus" aria-hidden="true"></span></summary>
+          <p>Yes. Any inverter system we install is a reversible air-to-air heat pump, and in an insulated room it is one of the cheapest ways to heat a space. We size for both loads so it performs properly in January as well as in July.</p>
+        </details>
+        <details class="qa">
+          <summary>How often does it need servicing?<span class="qa-plus" aria-hidden="true"></span></summary>
+          <p>Annually for domestic, six-monthly for heavily used commercial systems. It protects the manufacturer warranty, keeps efficiency up, and prevents the two most common failures we attend: blocked condensate drains and fouled coils.</p>
+        </details>
+        <details class="qa">
+          <summary>What is F-Gas and why does it matter?<span class="qa-plus" aria-hidden="true"></span></summary>
+          <p>Refrigerant handling is legally restricted to certified engineers and certified companies. An installer without F-Gas certification cannot lawfully work on the refrigerant circuit, and a system installed outside that framework can invalidate both the warranty and your insurance. We are registered, and we will show you the certificate.</p>
+        </details>
+        <details class="qa">
+          <summary>How long does an install take?<span class="qa-plus" aria-hidden="true"></span></summary>
+          <p>Most single-room domestic installs are one day. Multi-splits are one to three days, and ducted and commercial work runs longer and is quoted by programme. You will have the dates in writing before we start.</p>
+        </details>
+        <details class="qa">
+          <summary>Do you work on systems you did not install?<span class="qa-plus" aria-hidden="true"></span></summary>
+          <p>Yes, for servicing and repair, with the caveat that we will tell you plainly if we find something in the original installation that we cannot warrant. If it needs putting right, we will price that separately and openly.</p>
+        </details>
+      </div>
+      <!-- FAQ:END -->
+      <div class="section-cta">
+        <a href="#book" class="btn btn--primary btn--lg">Get a Fixed Quote</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="container">
+      <span class="eyebrow">Comfort today, a brighter tomorrow</span>
+      <h2>Better air. Brighter living. Done right the first time.</h2>
+      <p>Send your postcode and what you need. We will reply the same day, and your fixed written quote follows within 24 hours of us seeing the space.</p>
+      <div class="section-cta">
+        <a href="#book" class="btn btn--primary btn--lg">Get a Fixed Quote</a>
+      </div>
+      <p class="reassure">Free quote. Fixed price before we start. F-Gas registered.</p>
+    </div>
+  </section>
 </main>
 
 <footer class="footer">
   <div class="container">
-    <p>Air conditioning, heating and ventilation installed, serviced and maintained across London and the whole of the South East. Residential, commercial and bespoke.</p>
-    <p class="footer-bar">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="wordmark">Cool<span class="r">Right</span></span>
+        <p>Air conditioning, heating and ventilation installed, serviced and maintained across London and the whole of the South East. Residential, commercial and bespoke.</p>
+      </div>
+      <div>
+        <h3>Navigate</h3>
+        <ul class="footer-links">
+          <li><a href="#why">Why CoolRight</a></li>
+          <li><a href="#how">The Process</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#commercial">Commercial</a></li>
+          <li><a href="#areas">Areas Covered</a></li>
+          <li><a href="#faq">FAQs</a></li>
+          <li><a href="#book">Get a Quote</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Services</h3>
+        <ul class="footer-links">
+          <li><a href="#services" data-svc-link="split">Wall-mounted splits</a></li>
+          <li><a href="#services" data-svc-link="multi">Multi-split systems</a></li>
+          <li><a href="#services" data-svc-link="ducted">Ducted and cassettes</a></li>
+          <li><a href="#services" data-svc-link="heating">Heating and heat pumps</a></li>
+          <li><a href="#services" data-svc-link="servicing">Servicing plans</a></li>
+          <li><a href="#services" data-svc-link="repairs">Repairs and regas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <div class="footer-contact">
+          <a href="mailto:team@coolright.co.uk">team@coolright.co.uk</a>
+          <span>London and the whole of the South East</span>
+          <span>F-Gas registered</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bar">
       <span>&copy; 2026 CoolRight</span>
-      <span>F-Gas registered &middot; Fully insured</span>
+      <span>Climate control. Done right.</span>
       <span><a href="/staff">Staff login</a></span>
-    </p>
+    </div>
   </div>
 </footer>
 
+<div class="action-bar" role="group" aria-label="Quick actions">
+  <a href="#book" class="btn btn--primary" data-focus-form>Get a Fixed Quote</a>
+</div>
+
 <!-- Order matters: everything else asks visit.js for the session id, and the
-     deferred pair are conveniences that must never hold up the form. -->
+     deferred four are conveniences that must never hold up the form. -->
 <script src="/assets/js/visit.js?v=cf09fd9e19"></script>
 <script src="/assets/js/partial.js?v=c2b1ab1d6d"></script>
 <script src="/assets/js/book.js?v=950b32a60d"></script>
+<script src="/assets/js/tabs.js?v=099d9316bc" defer></script>
+<script src="/assets/js/menu.js?v=db906eb402" defer></script>
 <script src="/assets/js/address.js?v=b851596330" defer></script>
 <script src="/assets/js/upload.js?v=1cc73520cc" defer></script>
 

@@ -15,8 +15,9 @@ exactly as it sits on disk, and generated HTML is committed to the repo.
 | 1. Routing, headers, stub home page | done |
 | 2. Schema, lib, lead / event / health API | done |
 | 3. The three step quote form and client scripts | done |
-| 4. Full home page content | next |
-| 5 to 12. Staff area, pipeline, money, content, bank, SEO | not started |
+| 4. Full home page content | done |
+| 5. Staff login and the dashboard | next |
+| 6 to 12. Pipeline, money, client cards, content, bank, SEO | not started |
 
 ## Business facts, and what is still outstanding
 
@@ -119,6 +120,11 @@ it those files skip rather than fail, and CI supplies one.
   Photos are re-encoded to 2000px on the long edge, PDFs are sent untouched, and
   anything that fails is a note on the confirmation rather than an error to go
   back and fix.
+- **Every word is in the markup.** Sections are generated into the committed
+  HTML by the build, never assembled from an array in the browser. Google
+  renders JavaScript; most AI crawlers do not, and this is most of the words on
+  the page. The services tab strip hides eight pre-rendered panels rather than
+  writing one.
 - **No third party analytics, no advertising cookies.** The only cookie the site
   sets is the staff session.
 - **Apply a schema change before merging the code that needs it.** Vercel deploys

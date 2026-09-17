@@ -1,0 +1,366 @@
+/* The home page sections. Split out of site.css so neither file grows past the
+   point where anybody can hold it in their head. */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Header ------------------------------------------------------------------ */
+
+.nav-end {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  min-width: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.nav-links a:hover { color: var(--text) }
+
+.nav-toggle {
+  display: none;
+  width: 42px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.bars, .bars::before, .bars::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--text);
+  margin: 0 auto;
+  position: relative;
+}
+
+.bars::before, .bars::after { content: ''; position: absolute }
+.bars::before { top: -6px }
+.bars::after { top: 6px }
+
+@media (max-width: 960px) {
+  .nav-toggle { display: block }
+  .nav-links { display: none }
+  body.nav-open { overflow: hidden }
+  body.nav-open .nav-links {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    inset: 64px 0 auto;
+    gap: 0;
+    padding: 12px 20px 24px;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--line);
+    z-index: 6;
+  }
+  body.nav-open .nav-links a {
+    display: block;
+    padding: 14px 0;
+    font-size: 17px;
+    color: var(--text);
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+/* Shared section furniture ------------------------------------------------ */
+
+section { padding: 72px 0 }
+
+.section-head { max-width: 72ch; margin-bottom: 34px }
+
+.section-head h2, .closing h2 {
+  font-size: clamp(25px, 3.1vw, 36px);
+  line-height: 1.18;
+  letter-spacing: -.015em;
+  margin: 12px 0 14px;
+}
+
+.section-cta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 34px;
+}
+
+.note { color: var(--muted); font-size: 14px }
+
+/* Trust bar --------------------------------------------------------------- */
+
+.trustbar {
+  padding: 24px 0;
+  border-block: 1px solid var(--line);
+  background: var(--bg-2);
+}
+
+.trustbar-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.badge strong { display: block; font-size: 15px }
+.badge span { color: var(--muted); font-size: 14px }
+
+/* Why --------------------------------------------------------------------- */
+
+.cards {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.card, .step, .area-card, .service-panel, .qa {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px;
+}
+
+.card h3, .step h3 { margin: 0 0 8px; font-size: 18px }
+.card p, .step p { margin: 0; color: var(--muted); font-size: 15px }
+
+/* How it works ------------------------------------------------------------ */
+
+.how { background: var(--bg-2) }
+
+.steps {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.num {
+  display: block;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* Services ---------------------------------------------------------------- */
+
+.services-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.pill {
+  padding: 9px 15px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pill[aria-selected="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.service-panel {
+  display: grid;
+  gap: 28px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  padding: 28px;
+}
+
+.service-content h3 { margin: 0 0 12px; font-size: 21px }
+.service-content p { color: var(--muted); margin: 0 0 14px }
+
+.service-aside {
+  border-left: 1px solid var(--line);
+  padding-left: 26px;
+}
+
+.service-aside h4 { margin: 0 0 12px; font-size: 15px }
+.service-aside ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14px }
+.service-aside li { margin-bottom: 10px }
+
+@media (max-width: 860px) {
+  .service-panel { grid-template-columns: 1fr; padding: 22px }
+  .service-aside { border-left: 0; border-top: 1px solid var(--line); padding: 20px 0 0 }
+}
+
+/* Commercial -------------------------------------------------------------- */
+
+.commercial { background: var(--bg-2) }
+
+.ll-grid {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+}
+
+.ll-text p { color: var(--muted) }
+.ll-text .btn { margin-top: 10px }
+
+.ll-list { list-style: none; margin: 0; padding: 0 }
+
+.ll-list li {
+  border-top: 1px solid var(--line);
+  padding: 18px 0;
+}
+
+.ll-list strong { display: block; margin-bottom: 4px }
+.ll-list span { color: var(--muted); font-size: 15px }
+
+@media (max-width: 860px) {
+  .ll-grid { grid-template-columns: 1fr; gap: 28px }
+}
+
+/* Areas ------------------------------------------------------------------- */
+
+.area-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.area-card h3 { margin: 0 0 12px; font-size: 16px }
+
+.county {
+  display: block;
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.area-card ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.area-note {
+  margin-top: 26px;
+  color: var(--muted);
+  max-width: 90ch;
+}
+
+/* FAQ --------------------------------------------------------------------- */
+
+.faq { background: var(--bg-2) }
+
+.faq-list { display: grid; gap: 10px }
+
+.qa { padding: 0 }
+
+.qa summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  padding: 18px 22px;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.qa summary::-webkit-details-marker { display: none }
+
+.qa-plus {
+  flex: none;
+  width: 11px;
+  height: 11px;
+  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  transform: rotate(45deg);
+  margin-top: -5px;
+}
+
+.qa[open] .qa-plus { transform: rotate(225deg); margin-top: 4px }
+
+.qa p { margin: 0; padding: 0 22px 20px; color: var(--muted) }
+
+/* Closing and footer ------------------------------------------------------ */
+
+.closing { text-align: center }
+.closing p { color: var(--muted); max-width: 64ch; margin-inline: auto }
+.closing .section-cta { justify-content: center }
+.reassure { margin-top: 18px !important; font-size: 14px }
+
+.footer-grid {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding-bottom: 32px;
+}
+
+.footer-brand p { max-width: 42ch }
+.footer h3 { margin: 0 0 12px; font-size: 14px; color: var(--text) }
+
+.footer-links, .footer-contact {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 9px;
+  font-size: 15px;
+}
+
+.footer-links a, .footer-contact a { color: var(--muted); text-decoration: none }
+.footer-links a:hover, .footer-contact a:hover { color: var(--accent) }
+
+@media (max-width: 860px) {
+  .footer-grid { grid-template-columns: 1fr 1fr }
+}
+
+/* The fixed action bar on phones. One button, until there is a number to
+   call. */
+.action-bar { display: none }
+
+@media (max-width: 720px) {
+  .action-bar {
+    display: flex;
+    position: fixed;
+    inset: auto 0 0;
+    gap: 10px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(10, 17, 32, .95);
+    border-top: 1px solid var(--line);
+    z-index: 4;
+  }
+  .action-bar .btn { flex: 1; text-align: center }
+  body { padding-bottom: 76px }
+  section { padding: 52px 0 }
+}
