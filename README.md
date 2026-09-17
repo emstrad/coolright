@@ -1,6 +1,7 @@
 # CoolRight
 
-Air conditioning, heating and ventilation across London and the South East.
+Air conditioning, heating and ventilation across London and the whole of the
+South East.
 One public site that turns a visitor into a quote request, and a staff area
 behind a login that runs the business from that point on.
 
@@ -16,6 +17,34 @@ exactly as it sits on disk, and generated HTML is committed to the repo.
 | 3. The three step quote form and client scripts | next |
 | 4. Full home page content | not started |
 | 5 to 12. Staff area, pipeline, money, content, bank, SEO | not started |
+
+## Business facts, and what is still outstanding
+
+`content/business.js` is the single source of truth. Anything not yet confirmed
+is `null` there, and nothing is written into a page from a guess.
+
+| Fact | State |
+| --- | --- |
+| Email | `team@coolright.co.uk` |
+| Region | London and the whole of the South East |
+| Accreditation | F-Gas registered |
+| Phone number | to be confirmed |
+| Google Business Profile | to be confirmed |
+
+Two of those block launch rather than a stage:
+
+- **The phone number.** Until it exists there is no `tel:` link anywhere, no
+  call link in the header and no call button in the mobile action bar. Set
+  `phone` and `phoneDisplay` and they all come back.
+- **The Google Business Profile.** It is the `sameAs` target that ties this site
+  to the map listing, and for a local trade the map pack is what wins "near me".
+  The profile matters more than the website: get it verified, complete,
+  categories right, service areas listed and collecting reviews before spending
+  another day here.
+
+The reviews in the approved design are marked placeholder and are not in this
+repo. Real ones get copied by hand into `content/reviews.js`, and the section
+ships hidden below five of them.
 
 ## Layout
 
