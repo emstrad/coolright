@@ -130,6 +130,32 @@ test('event detail is stripped to the allow-list', suite, async () => {
   assert.deepEqual(rows[0].detail, { step: 2, field: 'email' });
 });
 
+test('the email outcome is recorded against the lead, either way', suite, async () => {
+  const notified = (await import('../api/notified.js')).default;
+
+  const first = await post(lead, body);
+  await post(notified, { id: first.payload.id, ok: true });
+  let rows = await sql`SELECT notified_at, notify_error FROM leads WHERE id = ${first.payload.id}`;
+  assert.ok(rows[0].notified_at);
+  assert.equal(rows[0].notify_error, null);
+
+  // A blocked relay must leave a trace, because "we have the lead and nobody
+  // was told" is the case that costs a job.
+  await post(notified, { id: first.payload.id, ok: false, error: 'relay_blocked' });
+  rows = await sql`SELECT notified_at, notify_error FROM leads WHERE id = ${first.payload.id}`;
+  assert.equal(rows[0].notified_at, null);
+  assert.equal(rows[0].notify_error, 'relay_blocked');
+});
+
+test('an attachment path outside this app\'s shape is dropped', suite, async () => {
+  const res = await post(lead, {
+    ...body,
+    files: ['leads/sess1234abcd/1700000000-photo.jpg', 'https://elsewhere.example/blob'],
+  });
+  const rows = await sql`SELECT files FROM leads WHERE id = ${res.payload.id}`;
+  assert.deepEqual(rows[0].files, ['leads/sess1234abcd/1700000000-photo.jpg']);
+});
+
 test('a foreign Origin is refused on a write', suite, async () => {
   const res = fakeRes();
   await lead(fakeReq({ body, headers: { origin: 'https://evil.example', host: 'coolright.co.uk' } }), res);

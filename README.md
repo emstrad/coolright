@@ -14,8 +14,8 @@ exactly as it sits on disk, and generated HTML is committed to the repo.
 | --- | --- |
 | 1. Routing, headers, stub home page | done |
 | 2. Schema, lib, lead / event / health API | done |
-| 3. The three step quote form and client scripts | next |
-| 4. Full home page content | not started |
+| 3. The three step quote form and client scripts | done |
+| 4. Full home page content | next |
 | 5 to 12. Staff area, pipeline, money, content, bank, SEO | not started |
 
 ## Business facts, and what is still outstanding
@@ -62,9 +62,14 @@ test/      node:test, run one file at a time against real Postgres
 ```
 npm install
 npm run migrate        # applies db/schema.sql, safe to re-run
+npm run build          # regenerates the form into every page and stamps assets
 npm run check:emdash   # house rule, enforced
 npm test               # unit tests always, integration tests when a database is set
 ```
+
+`npm run build` is an authoring tool, not a deploy step. Run it after editing
+anything under `public/assets/` or `scripts/book-form.js` and commit what it
+writes, because a test fails when a committed page is out of date.
 
 Integration tests need `TEST_DATABASE_URL` pointing at a local Postgres. Without
 it those files skip rather than fail, and CI supplies one.
@@ -96,6 +101,24 @@ it those files skip rather than fail, and CI supplies one.
   partial that lands after a completion is dropped, and a completed lead
   back-fills its id onto that visit's events so the work is credited to the
   channel that produced it.
+- **One implementation of the quote form.** `scripts/book-form.js` generates it
+  into every page between markers. Hand-writing it into one page and generating
+  it elsewhere is how the two copies drift, and you find out when a field added
+  to one is missing from the other.
+- **The held partial.** Passing step one arms a partial, which is then held and
+  sent only on genuine abandonment: the page hidden for 45 seconds, or 3 minutes
+  idle with the form open. Submitting cancels it, and the server drops a partial
+  that lands after a completion, so one visitor is one enquiry.
+- **The email relay is posted from the browser.** FormSubmit and most relays sit
+  behind Cloudflare, which answers a server-to-server request with a bot
+  challenge and a 403 rather than sending anything. A blocked or ad-blocked
+  browser therefore costs the email and never the enquiry, and `/api/notified`
+  records which of the two happened.
+- **A file never costs somebody an enquiry.** Uploads run on submit, one at a
+  time, direct to blob storage where possible and proxied under 4MB where not.
+  Photos are re-encoded to 2000px on the long edge, PDFs are sent untouched, and
+  anything that fails is a note on the confirmation rather than an error to go
+  back and fix.
 - **No third party analytics, no advertising cookies.** The only cookie the site
   sets is the staff session.
 - **Apply a schema change before merging the code that needs it.** Vercel deploys

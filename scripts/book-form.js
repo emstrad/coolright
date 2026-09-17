@@ -1,64 +1,42 @@
-<!DOCTYPE html>
-<html lang="en-GB" class="no-js">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Air Conditioning Installation, Servicing and Repair | London and the whole of the South East | CoolRight</title>
-<meta name="description" content="CoolRight installs, services and repairs air conditioning, heating and ventilation across London and the whole of the South East. F-Gas registered engineers, free quote visit, fixed written price." />
-<meta name="theme-color" content="#0F172A" />
-<link rel="canonical" href="https://coolright.co.uk/" />
-<meta property="og:type" content="website" />
-<meta property="og:locale" content="en_GB" />
-<meta property="og:title" content="CoolRight | Climate control. Done right." />
-<meta property="og:description" content="Air conditioning, heating and ventilation installed and maintained properly. Free quote visit, fixed written price, F-Gas registered engineers." />
-<meta property="og:url" content="https://coolright.co.uk/" />
-<!-- Fonts are self hosted rather than fetched from Google, so first paint does
-     not wait on a DNS lookup and TLS handshake to somebody else's server. The
-     woff2 lands with the full home page build; until then this is a system stack. -->
-<link rel="stylesheet" href="/assets/css/site.css?v=b2b1d8fad1" />
-<link rel="stylesheet" href="/assets/css/form.css?v=52118cec07" />
-<script>document.documentElement.classList.remove('no-js')</script>
-</head>
-<body>
+// The one implementation of the quote request form.
+//
+// Every page that carries the form, the home page included, gets it from here
+// via the build. Hand-writing it into one page and generating it elsewhere is
+// how the two copies drift, and you find out when a field added to one is
+// missing from the other.
+//
+// The error text next to each field is the same string lib/validate.js returns,
+// so a server side 400 shows the message that was already sitting in the
+// markup rather than a second, differently worded one.
 
-<a class="skip" href="#main">Skip to content</a>
+import { JOB_TYPES, PROPERTY_TYPES } from '../lib/validate.js';
 
-<header class="site-header">
-  <div class="container nav">
-    <a href="/" class="brand" aria-label="CoolRight home">
-      <span class="wordmark">Cool<span class="r">Right</span></span>
-      <span class="tagline">Climate control. Done <span class="r">right.</span></span>
-    </a>
-    <div class="nav-cta">
-      <!-- The call link and the fixed bottom action bar both return the moment
-           the phone number is confirmed in content/business.js. A placeholder
-           number on a live page rings somebody else, so there is not one. -->
-      <a href="mailto:team@coolright.co.uk" class="call-link">team@coolright.co.uk</a>
-      <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
-    </div>
-  </div>
-</header>
+const CHECKS = [
+  ['New AC installation', 'New installation'],
+  ['Servicing', 'Service or clean'],
+  ['Repair / not cooling', 'Repair / not cooling'],
+  ['Heating / heat pump', 'Heating / heat pump'],
+  ['Ventilation / MVHR', 'Ventilation / MVHR'],
+  ['Not sure', 'Not sure yet'],
+];
 
-<main id="main">
-  <section class="hero">
-    <div class="container">
-      <span class="eyebrow">Air conditioning &middot; Heating &middot; Ventilation</span>
-      <h1>Air conditioning installed properly. <span class="hl">Fixed price</span>, in writing, before we start.</h1>
-      <p class="lede">Tell us what you need and we will price it. One visit to see the space, a fixed written quote, then F-Gas registered engineers who install to manufacturer spec and maintain what they fit.</p>
-      <p class="speed"><strong>Free quote visit, fixed written price within 24 hours.</strong> F-Gas registered engineers. No pressure, no hard sell, no obligation.</p>
-      <div class="hero-cta">
-        <a href="#book" class="btn btn--primary btn--lg">Get a Fixed Quote</a>
-      </div>
-    </div>
-  </section>
+const tick = '<span class="box" aria-hidden="true"></span>';
 
-  <section class="panel">
-    <div class="container">
-      <!-- BOOK:START. Written by scripts/build.js from scripts/book-form.js.
-           Do not edit between these markers: the next build overwrites it, and
-           a hand-edited copy here is exactly the drift the generator exists to
-           prevent. -->
-<div class="book-card" id="book">
+function checkboxes() {
+  return CHECKS.map(([value, label]) => {
+    // Guards against a label here drifting away from the list the server will
+    // accept, which would show the visitor an option that always fails.
+    if (!JOB_TYPES.includes(value)) throw new Error(`Unknown job type: ${value}`);
+    return `<label class="check"><input type="checkbox" name="job_types" value="${value}" />${tick}${label}</label>`;
+  }).join('\n            ');
+}
+
+function propertyOptions() {
+  return PROPERTY_TYPES.map((t) => `<option>${t}</option>`).join('\n                ');
+}
+
+export function formHtml() {
+  return `<div class="book-card" id="book">
       <div class="book-body">
         <div class="book-head">
           <h2>Get your fixed quote</h2>
@@ -104,12 +82,7 @@
             <div class="form-row">
               <label id="issue-label">What do you need? Tick anything that applies.</label>
               <div class="checks" role="group" aria-labelledby="issue-label">
-            <label class="check"><input type="checkbox" name="job_types" value="New AC installation" /><span class="box" aria-hidden="true"></span>New installation</label>
-            <label class="check"><input type="checkbox" name="job_types" value="Servicing" /><span class="box" aria-hidden="true"></span>Service or clean</label>
-            <label class="check"><input type="checkbox" name="job_types" value="Repair / not cooling" /><span class="box" aria-hidden="true"></span>Repair / not cooling</label>
-            <label class="check"><input type="checkbox" name="job_types" value="Heating / heat pump" /><span class="box" aria-hidden="true"></span>Heating / heat pump</label>
-            <label class="check"><input type="checkbox" name="job_types" value="Ventilation / MVHR" /><span class="box" aria-hidden="true"></span>Ventilation / MVHR</label>
-            <label class="check"><input type="checkbox" name="job_types" value="Not sure" /><span class="box" aria-hidden="true"></span>Not sure yet</label>
+            ${checkboxes()}
               </div>
               <span class="err" data-err="job_types">Pick at least one, "Not sure yet" is fine.</span>
             </div>
@@ -134,17 +107,12 @@
               <label for="f-property">What sort of property is it?</label>
               <select id="f-property" name="property_type" required>
                 <option value="" disabled selected>Select one</option>
-                <option>House</option>
-                <option>Flat or apartment</option>
-                <option>Office</option>
-                <option>Retail or hospitality</option>
-                <option>Server or comms room</option>
-                <option>Other commercial</option>
+                ${propertyOptions()}
               </select>
               <span class="err" data-err="property_type">Please choose one.</span>
             </div>
             <div class="form-row">
-              <label class="check" for="f-existing"><input type="checkbox" id="f-existing" name="existing_system" /><span class="box" aria-hidden="true"></span>There is existing air conditioning at the property</label>
+              <label class="check" for="f-existing"><input type="checkbox" id="f-existing" name="existing_system" />${tick}There is existing air conditioning at the property</label>
             </div>
             <div class="form-row">
               <label for="f-address">Address of the property <span class="opt">(optional)</span></label>
@@ -181,30 +149,5 @@
         <p>An engineer will reply today. Where we need to see the space first, that visit is free, and your fixed written quote follows within 24 hours.</p>
         <p class="upload-note" id="upload-note" hidden></p>
       </div>
-    </div>
-      <!-- BOOK:END -->
-    </div>
-  </section>
-</main>
-
-<footer class="footer">
-  <div class="container">
-    <p>Air conditioning, heating and ventilation installed, serviced and maintained across London and the whole of the South East. Residential, commercial and bespoke.</p>
-    <p class="footer-bar">
-      <span>&copy; 2026 CoolRight</span>
-      <span>F-Gas registered &middot; Fully insured</span>
-      <span><a href="/staff">Staff login</a></span>
-    </p>
-  </div>
-</footer>
-
-<!-- Order matters: everything else asks visit.js for the session id, and the
-     deferred pair are conveniences that must never hold up the form. -->
-<script src="/assets/js/visit.js?v=cf09fd9e19"></script>
-<script src="/assets/js/partial.js?v=c2b1ab1d6d"></script>
-<script src="/assets/js/book.js?v=950b32a60d"></script>
-<script src="/assets/js/address.js?v=b851596330" defer></script>
-<script src="/assets/js/upload.js?v=1cc73520cc" defer></script>
-
-</body>
-</html>
+    </div>`;
+}

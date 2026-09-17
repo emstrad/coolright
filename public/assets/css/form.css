@@ -1,0 +1,224 @@
+/* Quote request form. Separate from site.css because it is the one component
+   that also has to look right inside a generated service or guide page. */
+
+.book-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  max-width: 640px;
+}
+
+.book-body { padding: 26px }
+
+.book-head h2 { margin: 0 0 4px; font-size: 24px }
+.book-head p { margin: 0 0 18px; color: var(--muted) }
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.dots span {
+  width: 34px;
+  height: 4px;
+  border-radius: 3px;
+  background: rgba(209, 213, 219, .2);
+}
+
+.dots span.is-done { background: var(--accent) }
+
+.step-label {
+  width: auto !important;
+  height: auto !important;
+  background: none !important;
+  margin-left: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* The honeypot. Off screen rather than display:none, because a bot that reads
+   styles skips a hidden field and fills a visible one. */
+.trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.fstep { display: none }
+.fstep.is-active { display: block }
+
+.form-row { margin-bottom: 16px }
+
+.form-row > label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.opt { font-weight: 400; color: var(--muted) }
+
+.hint {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea,
+.address-picker {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 16px; /* anything smaller and iOS zooms the page on focus */
+}
+
+textarea { resize: vertical }
+
+input[aria-invalid="true"], select[aria-invalid="true"] {
+  border-color: #F87171;
+}
+
+.err {
+  display: none;
+  margin-top: 6px;
+  font-size: 14px;
+  color: #FCA5A5;
+}
+
+.err.is-on { display: block }
+
+.two-col {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.checks {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.check input { position: absolute; opacity: 0; width: 0; height: 0 }
+
+.box {
+  width: 19px;
+  height: 19px;
+  flex: none;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  position: relative;
+}
+
+.check input:checked + .box {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.check input:checked + .box::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--accent-ink);
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+.check input:focus-visible + .box {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.file-list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.address-picker { margin-top: 8px }
+
+.fnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.fnav .btn--lg { margin-left: auto }
+
+.back-link {
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.form-foot {
+  margin: 16px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.book-success { padding: 40px 28px; text-align: center }
+
+.check-ring {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  position: relative;
+}
+
+.check-ring::after {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 12px;
+  width: 12px;
+  height: 22px;
+  border: solid var(--accent);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.book-success h3 { margin: 0 0 8px; font-size: 22px }
+.book-success p { color: var(--muted); margin: 0 auto; max-width: 46ch }
+.upload-note { margin-top: 14px !important; font-size: 14px }
+
+@media (max-width: 560px) {
+  .two-col { grid-template-columns: 1fr }
+  .book-body { padding: 20px }
+}

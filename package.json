@@ -10,7 +10,8 @@
     "migrate": "node db/migrate.js",
     "test": "node --test --test-concurrency=1 --experimental-test-module-mocks \"test/*.test.js\"",
     "check:emdash": "node scripts/check-no-em-dash.js",
-    "check": "npm run check:emdash && npm test"
+    "check": "npm run check:emdash && npm test",
+    "build": "node scripts/build.js"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
