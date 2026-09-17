@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: coolright_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/coolright_test
+      TEST_DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/coolright_test
+      IP_SALT: ci-salt
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # actions/checkout leaves its own credentials in the clone as
+          # http.https://github.com/.extraheader, and git sends that in
+          # preference to any token in a push URL.
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run check:emdash
+
+      - name: Apply schema
+        run: npm run migrate
+
+      - name: Apply schema again, to prove it is idempotent
+        run: npm run migrate
+
+      - run: npm test
