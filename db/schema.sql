@@ -97,3 +97,141 @@ CREATE TABLE IF NOT EXISTS rate_hits (
 );
 
 CREATE INDEX IF NOT EXISTS rate_hits_window_idx ON rate_hits (window_start);
+
+-- ---------------------------------------------------------------------------
+-- The back office. Added in one pass so the schema is applied before any of the
+-- code that needs it, which is the order that keeps enquiries from meeting a
+-- table that is not there yet.
+-- ---------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS job_types (
+  -- Labels with no price. There is no rate card, because every job is quoted.
+  -- The type exists so the jobs list can be filtered and reported by it.
+  key      text PRIMARY KEY,
+  label    text NOT NULL,
+  position integer NOT NULL DEFAULT 0,
+  active   boolean NOT NULL DEFAULT true
+);
+
+CREATE TABLE IF NOT EXISTS job_settings (
+  -- One row, id fixed at 1.
+  id               integer PRIMARY KEY DEFAULT 1 CHECK (id = 1),
+  tax_percent      numeric(5,2) NOT NULL DEFAULT 20,
+  lead_fee_percent numeric(5,2) NOT NULL DEFAULT 15,
+  lead_fee_to      text,
+  worker_fee_to    text,
+  partners         text[] NOT NULL DEFAULT '{}',
+  deposit_percent  numeric(5,2),
+  updated_at       timestamptz NOT NULL DEFAULT now()
+);
+
+INSERT INTO job_settings (id) VALUES (1) ON CONFLICT (id) DO NOTHING;
+
+CREATE TABLE IF NOT EXISTS jobs (
+  id             bigserial PRIMARY KEY,
+  lead_id        bigint REFERENCES leads (id) ON DELETE SET NULL,
+  -- One row per piece of work, from quote through to completion. Reusing one
+  -- table rather than a separate quotes table keeps the client record, the
+  -- photos and the address attached all the way through, and means no data
+  -- moves when a quote is won.
+  status         text NOT NULL DEFAULT 'quoted'
+                 CHECK (status IN ('quoted', 'booked', 'completed', 'declined', 'cancelled')),
+  customer_name  text NOT NULL,
+  phone          text,
+  email          text,
+  address_line   text,
+  town           text,
+  postcode       text,
+  job_type       text REFERENCES job_types (key),
+  description    text,
+  worker         text,
+  -- Integer pence everywhere. Floating point cannot hold 0.15 exactly, and a
+  -- chain of percentage steps in floats drifts away from what anyone was paid.
+  price_pence    bigint NOT NULL DEFAULT 0,
+  costs_pence    bigint,          -- null means not known yet, which is not zero
+  quoted_on      date,
+  quote_expires  date,
+  job_date       date,
+  completed_on   date,
+  -- Why a quote was lost. The most valuable field in the database and the one
+  -- most often omitted.
+  declined_reason text CHECK (declined_reason IN
+                    ('price', 'timing', 'went elsewhere', 'no longer needed', 'no reply')),
+  -- A job stores the rates it was agreed at rather than deriving them from
+  -- today's settings at read time. Raising a percentage next month must not
+  -- silently rewrite what everyone earned last month.
+  tax_percent      numeric(5,2) NOT NULL DEFAULT 20,
+  lead_fee_percent numeric(5,2) NOT NULL DEFAULT 15,
+  lead_fee_to      text,
+  worker_fee_pence bigint NOT NULL DEFAULT 0,
+  partners         text[] NOT NULL DEFAULT '{}',
+  notes          text,
+  created_at     timestamptz NOT NULL DEFAULT now(),
+  updated_at     timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS jobs_status_idx ON jobs (status, created_at DESC);
+CREATE INDEX IF NOT EXISTS jobs_quoted_idx ON jobs (quoted_on DESC);
+CREATE INDEX IF NOT EXISTS jobs_date_idx ON jobs (job_date);
+CREATE INDEX IF NOT EXISTS jobs_lead_idx ON jobs (lead_id);
+
+CREATE TABLE IF NOT EXISTS job_payments (
+  -- A list, not two tick boxes. A quoted trade takes a deposit, sometimes a
+  -- stage payment or two, then a balance, and the amounts are whatever was
+  -- agreed rather than half the price.
+  id            bigserial PRIMARY KEY,
+  job_id        bigint NOT NULL REFERENCES jobs (id) ON DELETE CASCADE,
+  amount_pence  bigint NOT NULL,
+  paid_on       date NOT NULL,
+  label         text NOT NULL DEFAULT 'stage'
+                CHECK (label IN ('deposit', 'stage', 'balance', 'retention')),
+  note          text,
+  -- Set when the payment came from a matched bank line, so unmatching can
+  -- remove exactly what matching created.
+  bank_transaction_id bigint,
+  created_at    timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS job_payments_job_idx ON job_payments (job_id, paid_on);
+
+CREATE TABLE IF NOT EXISTS bank_statements (
+  id          bigserial PRIMARY KEY,
+  filename    text NOT NULL,
+  uploaded_at timestamptz NOT NULL DEFAULT now(),
+  rows_total  integer NOT NULL DEFAULT 0,
+  rows_new    integer NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS bank_transactions (
+  id            bigserial PRIMARY KEY,
+  statement_id  bigint REFERENCES bank_statements (id) ON DELETE CASCADE,
+  -- The bank's own id where the export has one, otherwise date, amount,
+  -- description and running balance hashed together, so overlapping months
+  -- never double up.
+  fingerprint   text NOT NULL UNIQUE,
+  happened_on   date NOT NULL,
+  description   text NOT NULL,
+  -- Signed, and any fee already folded in, so a line is the money that
+  -- actually moved.
+  amount_pence  bigint NOT NULL,
+  category      text,
+  category_kind text CHECK (category_kind IN ('guessed', 'learned', 'manual')),
+  split         jsonb,
+  split_kind    text CHECK (split_kind IN ('guessed', 'learned', 'manual')),
+  job_id        bigint REFERENCES jobs (id) ON DELETE SET NULL,
+  job_kind      text CHECK (job_kind IN ('suggested', 'learned', 'manual')),
+  created_at    timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS bank_tx_date_idx ON bank_transactions (happened_on DESC);
+CREATE INDEX IF NOT EXISTS bank_tx_job_idx ON bank_transactions (job_id);
+
+CREATE TABLE IF NOT EXISTS bank_rules (
+  -- What the page learns. The key is the description with its numbers
+  -- stripped, so "TRAVIS PERKINS 1234" and "... 5678" share one.
+  key         text PRIMARY KEY,
+  category    text,
+  split       jsonb,
+  job_id      bigint REFERENCES jobs (id) ON DELETE SET NULL,
+  updated_at  timestamptz NOT NULL DEFAULT now()
+);

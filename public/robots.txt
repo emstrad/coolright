@@ -1,0 +1,14 @@
+# One group only, on purpose.
+#
+# Adding a named group for a particular crawler makes that crawler ignore the
+# wildcard group entirely, so the disallows below would stop applying to it.
+# A single group applies to everybody, including the AI crawlers, which are
+# allowed here deliberately: being quoted by an assistant is worth more to a
+# quoted trade than the traffic it costs.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /staff
+
+Sitemap: https://coolright.co.uk/sitemap.xml

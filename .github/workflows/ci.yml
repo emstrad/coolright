@@ -44,6 +44,14 @@ jobs:
 
       - run: npm run check:emdash
 
+      - name: Pages are current and no page is thin
+        run: |
+          npm run build
+          git diff --exit-code -- public || {
+            echo "Generated pages are stale. Run npm run build and commit."
+            exit 1
+          }
+
       - name: Apply schema
         run: npm run migrate
 

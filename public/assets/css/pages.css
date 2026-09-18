@@ -1,0 +1,57 @@
+/* Service, guide and hub pages. Split out of sections.css to keep every
+   authored file under 300 lines, which is the point at which one stops
+   fitting in anybody head at once. */
+
+
+.crumbs {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+.crumbs a { color: var(--muted); text-decoration: none }
+.crumbs a:hover { color: var(--accent) }
+
+.page h1 {
+  font-size: clamp(27px, 3.6vw, 42px);
+  max-width: 24ch;
+}
+
+.page h2 {
+  font-size: clamp(21px, 2.4vw, 27px);
+  margin: 38px 0 12px;
+}
+
+.page h3 { font-size: 18px; margin: 24px 0 8px }
+
+.page p, .page li {
+  color: var(--muted);
+  max-width: 74ch;
+}
+
+.page .lede { color: var(--text); font-size: 19px }
+
+.page .cards { margin-top: 26px }
+.page .card h2 { margin: 0 0 8px; font-size: 19px }
+.page .card a { text-decoration: none }
+
+.guide-link {
+  margin-top: 30px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+}
+
+.ranges { list-style: none; margin: 24px 0; padding: 0; max-width: 74ch }
+
+.ranges li {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.ranges strong { color: var(--text) }
+.ranges span { color: var(--accent); white-space: nowrap; font-weight: 600 }

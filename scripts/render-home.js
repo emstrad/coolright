@@ -7,6 +7,8 @@
 import { services } from '../content/services.js';
 import { faqs } from '../content/faqs.js';
 import { business } from '../content/business.js';
+import { loadServices } from '../content/services/index.js';
+import { loadGuides, guideReady } from '../content/guides/index.js';
 
 const escape = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -90,4 +92,22 @@ export function schemaHtml() {
   return [local, faqPage]
     .map((block) => `<script type="application/ld+json">\n${JSON.stringify(block, null, 0)}\n</script>`)
     .join('\n');
+}
+
+// The footer link block, built from the pages that actually exist. A page
+// nothing links to is a page Google treats as unimportant, and a link to a page
+// the build refused to write is a 404.
+export async function linksHtml() {
+  const services = await loadServices();
+  const guides = (await loadGuides()).filter(guideReady);
+
+  const items = services.map((s) => (
+    `<li><a href="/services/${s.slug}">${escape(s.name)}</a></li>`
+  )).concat(guides.map((g) => (
+    `<li><a href="/guides/${g.slug}">${escape(g.name)}</a></li>`
+  )));
+
+  return `<ul class="footer-links">
+          ${items.join('\n          ')}
+        </ul>`;
 }

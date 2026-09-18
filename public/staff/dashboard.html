@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Back office | CoolRight</title>
+<link rel="stylesheet" href="/assets/css/staff.css?v=2244faf718" />
+</head>
+<body>
+
+<header class="staff-header">
+  <div class="staff-bar">
+    <span class="staff-brand">CoolRight</span>
+    <nav class="tabs" aria-label="Sections">
+      <button type="button" class="tab" data-tab="dashboard" aria-current="page">Dashboard</button>
+      <button type="button" class="tab" data-tab="jobs">Jobs</button>
+      <button type="button" class="tab" data-tab="clients">Clients</button>
+      <button type="button" class="tab" data-tab="bank">Bank</button>
+    </nav>
+    <div class="staff-end">
+      <div class="ranges" role="group" aria-label="Period">
+        <button type="button" class="range" data-range="today">Today</button>
+        <button type="button" class="range" data-range="7d">7 days</button>
+        <button type="button" class="range is-on" data-range="30d">30 days</button>
+        <button type="button" class="range" data-range="all">All</button>
+      </div>
+      <button type="button" class="link" id="sign-out">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<main class="staff-main">
+  <section id="panel-dashboard" class="panel-section"></section>
+  <section id="panel-jobs" class="panel-section" hidden></section>
+  <section id="panel-clients" class="panel-section" hidden></section>
+  <section id="panel-bank" class="panel-section" hidden></section>
+</main>
+
+<dialog id="card-dialog" class="card-dialog"></dialog>
+
+<script src="/assets/js/ui.js?v=b8a2da7fef"></script>
+<script src="/assets/js/staff-dashboard.js?v=089fc7d3fc"></script>
+<script src="/assets/js/staff-jobs.js?v=6f69f0e64e"></script>
+<script src="/assets/js/staff-clients.js?v=7a82649063"></script>
+<script src="/assets/js/staff-bank.js?v=485bc02ca7"></script>
+<script src="/assets/js/staff-app.js?v=616df9c0fe"></script>
+</body>
+</html>

@@ -29,7 +29,9 @@ export async function startDb() {
   client = new pg.Client({ connectionString: DB_URL, ssl: false });
   await client.connect();
   const sql = makeSql(client);
-  mock.module('../lib/db.js', {
+  // An absolute file URL, because a relative specifier here would resolve
+  // against this helper rather than against the modules being mocked.
+  mock.module(new URL('../../lib/db.js', import.meta.url).href, {
     namedExports: {
       sql,
       ping: async () => true,
