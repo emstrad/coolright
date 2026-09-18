@@ -10,6 +10,7 @@ import { loadGuides, guideReady } from '../content/guides/index.js';
 import { hubs } from '../content/hubs.js';
 import { business } from '../content/business.js';
 import { formHtml } from './book-form.js';
+import { headerHtml, actionBarHtml } from './chrome.js';
 
 const PUBLIC = join(process.cwd(), 'public');
 const MIN_WORDS = 250;
@@ -36,6 +37,7 @@ function shell({ title, description, path, h1, breadcrumb, body, schema, hasGuid
 <meta property="og:title" content="${escape(title)}" />
 <meta property="og:description" content="${escape(description)}" />
 <meta property="og:url" content="${url}" />
+<link rel="preload" href="/assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="/assets/css/site.css" />
 <link rel="stylesheet" href="/assets/css/sections.css" />
 <link rel="stylesheet" href="/assets/css/pages.css" />
@@ -49,31 +51,8 @@ ${JSON.stringify(breadcrumb)}
 
 <a class="skip" href="#main">Skip to content</a>
 
-<header class="site-header">
-  <div class="container nav">
-    <a href="/" class="brand" aria-label="CoolRight home">
-      <span class="wordmark">Cool<span class="r">Right</span></span>
-      <span class="tagline">Climate control. Done <span class="r">right.</span></span>
-    </a>
-    <div class="nav-end">
-      <nav aria-label="Primary" id="nav-panel">
-        <ul class="nav-links">
-          <li><a href="/services">Services</a></li>
-          ${hasGuides ? '<li><a href="/guides">Cost Guides</a></li>' : ''}
-          <li><a href="/#areas">Areas</a></li>
-          <li><a href="/#faq">FAQs</a></li>
-        </ul>
-      </nav>
-      <div class="nav-cta">
-        <a href="mailto:${business.email}" class="call-link">${business.email}</a>
-        <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
-      </div>
-      <button class="nav-toggle" type="button" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel">
-        <span class="bars" aria-hidden="true"></span>
-        <span class="sr-only">Menu</span>
-      </button>
-    </div>
-  </div>
+<header class="site-header" id="site-header">
+  ${headerHtml({ hasGuides, onHome: false })}
 </header>
 
 <main id="main">
@@ -108,6 +87,8 @@ ${formHtml()}
     </div>
   </div>
 </footer>
+
+${actionBarHtml()}
 
 <script src="/assets/js/visit.js"></script>
 <script src="/assets/js/partial.js"></script>

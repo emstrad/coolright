@@ -15,8 +15,9 @@
 <!-- Fonts are self hosted rather than fetched from Google, so first paint does
      not wait on a DNS lookup and TLS handshake to somebody else's server. The
      woff2 lands with the brand pass; until then this is a system stack. -->
-<link rel="stylesheet" href="/assets/css/site.css?v=a9dca6a524" />
-<link rel="stylesheet" href="/assets/css/sections.css?v=f36fad2c93" />
+<link rel="preload" href="/assets/fonts/manrope.woff2?v=a30ddcd349" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/site.css?v=4fac3745e7" />
+<link rel="stylesheet" href="/assets/css/sections.css?v=90e8698dd4" />
 <link rel="stylesheet" href="/assets/css/pages.css?v=ca601331f6" />
 <link rel="stylesheet" href="/assets/css/form.css?v=f719797ce7" />
 <!-- SCHEMA:START. Written by scripts/build.js from content/. Editing it here
@@ -35,7 +36,10 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="site-header" id="site-header">
-  <div class="container nav">
+  <!-- HEADER:START. Written by scripts/build.js from scripts/chrome.js, so the
+       home page and every generated page carry the same header rather than two
+       copies that drift. -->
+<div class="container nav">
     <a href="/" class="brand" aria-label="CoolRight home">
       <span class="wordmark">Cool<span class="r">Right</span></span>
       <span class="tagline">Climate control. Done <span class="r">right.</span></span>
@@ -45,24 +49,26 @@
         <ul class="nav-links">
           <li><a href="#how">How It Works</a></li>
           <li><a href="/services">Services</a></li>
+          
           <li><a href="#commercial">Commercial</a></li>
           <li><a href="#areas">Areas</a></li>
           <li><a href="#faq">FAQs</a></li>
         </ul>
       </nav>
-      <div class="nav-cta">
-        <!-- The call link and the call button in the mobile bar both return the
-             moment the phone number is confirmed in content/business.js. A
-             placeholder number on a live page rings somebody else. -->
-        <a href="mailto:team@coolright.co.uk" class="call-link">team@coolright.co.uk</a>
-        <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
-      </div>
       <button class="nav-toggle" type="button" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel">
         <span class="bars" aria-hidden="true"></span>
-        <span class="sr-only">Menu</span>
+        <span class="menu-label">Menu</span>
       </button>
+      <div class="nav-cta">
+        <a href="mailto:team@coolright.co.uk" class="call-link">
+          <span class="contact-full">team@coolright.co.uk</span>
+          <span class="contact-short">Email</span>
+        </a>
+        <a href="#book" class="btn btn--primary">Get a Fixed Quote</a>
+      </div>
     </div>
   </div>
+      <!-- HEADER:END -->
 </header>
 
 <main id="main">
@@ -581,9 +587,12 @@
   </div>
 </footer>
 
+<!-- ACTIONBAR:START. Written by scripts/build.js from scripts/chrome.js. -->
 <div class="action-bar" role="group" aria-label="Quick actions">
+  <a href="mailto:team@coolright.co.uk" class="btn btn--ghost">Email Us</a>
   <a href="#book" class="btn btn--primary" data-focus-form>Get a Fixed Quote</a>
 </div>
+      <!-- ACTIONBAR:END -->
 
 <!-- Order matters: everything else asks visit.js for the session id, and the
      deferred four are conveniences that must never hold up the form. -->

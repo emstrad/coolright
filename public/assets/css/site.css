@@ -3,6 +3,25 @@
    and every reference to this file is content-hash stamped, so it can be
    served immutable for a year without stranding a returning visitor. */
 
+/* One self-hosted variable woff2, not Google Fonts. Fetching it from Google
+   puts a DNS lookup, a TLS handshake and two round trips to somebody else's
+   server in front of first paint, and hands them a log of every visitor. One
+   variable file covers every weight the site uses, at 25KB.
+
+   Manrope, SIL Open Font License, licence committed alongside the file.
+   swap: the page renders immediately in the fallback and reflows once the
+   font lands, rather than showing nothing at all for a second. */
+@font-face {
+  font-family: 'Manrope';
+  /* Stamped by the build, like every other asset, because /assets is served
+     immutable for a year and a replaced font on a stable URL would strand a
+     returning visitor with the old one. */
+  src: url('/assets/fonts/manrope.woff2?v=a30ddcd349') format('woff2');
+  font-weight: 200 800;
+  font-display: swap;
+  font-style: normal;
+}
+
 *, *::before, *::after { box-sizing: border-box }
 
 :root {
@@ -15,7 +34,7 @@
   --accent: #38BDF8;
   --accent-ink: #062033;
   --radius: 14px;
-  --font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font: 'Manrope', system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 html { -webkit-text-size-adjust: 100% }
@@ -68,9 +87,11 @@ a { color: var(--accent) }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  padding: 14px 0;
-  flex-wrap: wrap;
+  gap: 16px;
+  padding: 12px 0;
+  /* Deliberately no wrapping. The header is one row at every width; the pieces
+     inside it shorten instead. */
+  flex-wrap: nowrap;
 }
 
 .brand {
@@ -109,11 +130,13 @@ a { color: var(--accent) }
   white-space: nowrap;
 }
 
-/* The email address is long. On a small screen the button matters more, so the
-   address drops out of the header and stays in the footer. */
+/* The tagline stays on a phone, under the wordmark, the way the sibling sites
+   carry theirs. It is a line of positioning, and the header is where people
+   read it. */
 @media (max-width: 720px) {
-  .call-link { display: none }
-  .tagline { display: none }
+  .wordmark { font-size: 21px }
+  .tagline { font-size: 11px; letter-spacing: .02em }
+  .call-link { font-size: 15px }
 }
 
 .btn {
@@ -168,11 +191,13 @@ a { color: var(--accent) }
 
 @media (max-width: 960px) {
   .hero-grid { grid-template-columns: 1fr; gap: 32px }
-  .hero { padding: 40px 0 48px }
+  .hero { padding: 52px 0 48px }
 }
 
 h1 {
-  font-size: clamp(30px, 4.2vw, 50px);
+  /* The floor matters more than the ceiling: this headline is the first thing
+     on a phone and it should carry the page rather than sit politely. */
+  font-size: clamp(34px, 4.4vw, 50px);
   line-height: 1.08;
   letter-spacing: -.02em;
   margin: 14px 0 18px;

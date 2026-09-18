@@ -11,17 +11,25 @@
 }
 
 /* Header ------------------------------------------------------------------ */
+/*
+   One row on every width, which is the pattern the rest of these sites use:
+   brand and its tagline on the left, then the hamburger labelled "Menu", then
+   the way to contact the business. The primary call to action is deliberately
+   NOT in the mobile header: it lives in the fixed bar at the bottom, where a
+   thumb already is. Putting it in the header is what pushed this one onto two
+   rows and made it look nothing like its siblings.
+*/
 
 .nav-end {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 18px;
   min-width: 0;
 }
 
 .nav-links {
   display: flex;
-  gap: 22px;
+  gap: 20px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -39,36 +47,48 @@
 
 .nav-toggle {
   display: none;
-  width: 42px;
-  height: 38px;
-  border: 1px solid var(--line);
-  border-radius: 9px;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 4px;
+  border: 0;
   background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
   cursor: pointer;
 }
 
+.menu-label { font-size: 17px }
+
 .bars, .bars::before, .bars::after {
   display: block;
-  width: 18px;
+  width: 20px;
   height: 2px;
-  background: var(--text);
-  margin: 0 auto;
+  background: currentColor;
   position: relative;
 }
 
-.bars::before, .bars::after { content: ''; position: absolute }
+.bars::before, .bars::after { content: ''; position: absolute; left: 0 }
 .bars::before { top: -6px }
 .bars::after { top: 6px }
 
+/* The contact link shortens before it wraps, because a header that wraps is
+   the thing that made this page look wrong in the first place. */
+.contact-short { display: none }
+
 @media (max-width: 960px) {
-  .nav-toggle { display: block }
+  .nav-toggle { display: inline-flex }
   .nav-links { display: none }
+  /* The CTA button moves to the bottom bar. The contact link stays. */
+  .nav-cta .btn { display: none }
+  .nav-end { gap: 16px }
+
   body.nav-open { overflow: hidden }
   body.nav-open .nav-links {
     display: flex;
     flex-direction: column;
     position: fixed;
-    inset: 64px 0 auto;
+    inset: 72px 0 auto;
     gap: 0;
     padding: 12px 20px 24px;
     background: var(--bg-2);
@@ -82,6 +102,11 @@
     color: var(--text);
     border-bottom: 1px solid var(--line);
   }
+}
+
+@media (max-width: 560px) {
+  .contact-full { display: none }
+  .contact-short { display: inline }
 }
 
 /* Shared section furniture ------------------------------------------------ */
@@ -345,8 +370,9 @@ section { padding: 72px 0 }
   .footer-grid { grid-template-columns: 1fr 1fr }
 }
 
-/* The fixed action bar on phones. One button, until there is a number to
-   call. */
+/* The fixed action bar on phones. Two buttons, the way the rest of these
+   sites do it: a quiet way to make contact, and the one thing the page is
+   for. */
 .action-bar { display: none }
 
 @media (max-width: 720px) {
@@ -360,7 +386,16 @@ section { padding: 72px 0 }
     border-top: 1px solid var(--line);
     z-index: 4;
   }
-  .action-bar .btn { flex: 1; text-align: center }
+  .action-bar .btn {
+    flex: 1;
+    text-align: center;
+    /* Pills, single line. A label that wraps to two lines in a fixed bar eats
+       the bottom of the page and reads as an accident. */
+    border-radius: 999px;
+    padding: 13px 10px;
+    font-size: 15px;
+    white-space: nowrap;
+  }
   body { padding-bottom: 76px }
   section { padding: 52px 0 }
 }

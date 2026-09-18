@@ -10,6 +10,7 @@ import { join, extname } from 'node:path';
 import { formHtml } from './book-form.js';
 import { servicesHtml, faqHtml, schemaHtml, linksHtml } from './render-home.js';
 import { buildPages } from './pages.js';
+import { headerHtml, actionBarHtml } from './chrome.js';
 
 const ROOT = process.cwd();
 const PUBLIC = join(ROOT, 'public');
@@ -23,6 +24,8 @@ const BLOCKS = [
   ['FAQ', () => faqHtml()],
   ['SCHEMA', () => schemaHtml()],
   ['LINKS', (links) => links],
+  ['HEADER', () => headerHtml({ onHome: true })],
+  ['ACTIONBAR', () => actionBarHtml()],
 ];
 
 // Every asset reference carries a content hash, which is the only thing that
@@ -30,7 +33,7 @@ const BLOCKS = [
 // last month's script against this month's markup.
 async function hashes() {
   const out = new Map();
-  for (const dir of ['css', 'js']) {
+  for (const dir of ['css', 'js', 'fonts']) {
     const base = join(PUBLIC, 'assets', dir);
     let names = [];
     try {
@@ -39,7 +42,7 @@ async function hashes() {
       continue;
     }
     for (const name of names) {
-      if (!['.css', '.js'].includes(extname(name))) continue;
+      if (!['.css', '.js', '.woff2'].includes(extname(name))) continue;
       const bytes = await readFile(join(base, name));
       out.set(`/assets/${dir}/${name}`, createHash('sha256').update(bytes).digest('hex').slice(0, 10));
     }
@@ -50,7 +53,7 @@ async function hashes() {
 export function stamp(html, map) {
   // Rewrites an existing stamp as readily as it adds a missing one, so the
   // pass is idempotent and editing an asset is the only thing that changes it.
-  return html.replace(/(["'])(\/assets\/(?:css|js)\/[A-Za-z0-9._-]+?)(?:\?v=[a-f0-9]+)?\1/g,
+  return html.replace(/(["'])(\/assets\/(?:css|js|fonts)\/[A-Za-z0-9._-]+?)(?:\?v=[a-f0-9]+)?\1/g,
     (whole, quote, path) => {
       const hash = map.get(path);
       return hash ? `${quote}${path}?v=${hash}${quote}` : whole;
@@ -90,6 +93,19 @@ export async function build({ write = true } = {}) {
   // Generated pages first, then the markers, then the stamps last, so whatever
   // the earlier passes wrote is what gets stamped.
   const generated = write ? await buildPages() : { problems: [], written: [], skipped: 0 };
+
+  // Stylesheets are stamped first, because site.css references the font file.
+  // Doing it before the hashes are taken means a changed font changes the css,
+  // which changes the css hash, which changes every page: the whole chain
+  // invalidates rather than stranding a visitor on last month's font.
+  for (const file of await readdir(join(PUBLIC, 'assets', 'css'))) {
+    if (extname(file) !== '.css') continue;
+    const path = join(PUBLIC, 'assets', 'css', file);
+    const before = await readFile(path, 'utf8');
+    const after = stamp(before, await hashes());
+    if (after !== before && write) await writeFile(path, after);
+  }
+
   const map = await hashes();
   const written = [];
 

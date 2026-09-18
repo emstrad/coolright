@@ -118,9 +118,22 @@ test/      node:test, run one file at a time against real Postgres
   split unit in Croydon behaves like one in Bromley, so pages that differed only
   by the town name would be the doorway page pattern, which Google demotes and
   which takes the rest of the site with it.
+- **One header, one action bar.** Both are generated from `scripts/chrome.js`
+  into the home page and every generated page, so the two cannot drift. The
+  header is one row at every width: brand and tagline, then the hamburger
+  labelled "Menu", then the way to contact the business. The primary call to
+  action is deliberately not in the mobile header; it lives in the fixed bar at
+  the bottom, where a thumb already is. Putting it in the header is what pushed
+  this site onto two rows and made it look unlike its siblings.
+- **One self-hosted variable font**, Manrope, 25KB, preloaded, licence
+  committed beside it. Not Google Fonts: that puts a DNS lookup, a TLS
+  handshake and two round trips to somebody else's server in front of first
+  paint. If the other sites in this family use a specific licensed typeface,
+  swap the file and the `font-family` and everything follows.
 - **Immutable assets need content hashes.** `/assets` is served for a year, so
-  every js and css reference is stamped by the build and a test fails when a
-  stamp is stale.
+  every js, css and font reference is stamped by the build and a test fails when
+  a stamp is stale. Stylesheets are stamped before the hashes are taken, so a
+  changed font changes the css, which changes every page.
 - **No aggregateRating, ever**, and no star average or review count in the
   visible copy. Ratings aggregated from another site are not eligible for
   Google's review snippets and marking one up risks a manual action.

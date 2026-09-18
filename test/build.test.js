@@ -29,7 +29,7 @@ test('every committed page is what the generator produces now', async () => {
 test('asset stamps are current', async () => {
   for (const page of await htmlPages()) {
     const html = await readFile(page, 'utf8');
-    const refs = html.match(/\/assets\/(?:css|js)\/[A-Za-z0-9._-]+(?:\?v=[a-f0-9]+)?/g) || [];
+    const refs = html.match(/\/assets\/(?:css|js|fonts)\/[A-Za-z0-9._-]+(?:\?v=[a-f0-9]+)?/g) || [];
     for (const ref of refs) {
       assert.match(ref, /\?v=[a-f0-9]{10}$/, `${ref} in ${page} is not stamped`);
     }
